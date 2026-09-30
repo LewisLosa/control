@@ -1,0 +1,92 @@
+@import "@fontsource/roboto/400.css";
+@import "@fontsource/roboto/500.css";
+@import "@fontsource/roboto/700.css";
+@import "m3-svelte/etc/styles.css";
+@import "m3-svelte/etc/recommended-styles.css";
+
+:root {
+  color-scheme: dark;
+}
+
+@layer tokens {
+  :root {
+    --m3c-primary: #d0bcff;
+    --m3c-on-primary: #381e72;
+    --m3c-primary-container: #4f378b;
+    --m3c-on-primary-container: #eaddff;
+
+    --m3c-secondary: #ccc2dc;
+    --m3c-on-secondary: #332d41;
+    --m3c-secondary-container: #4a4458;
+    --m3c-on-secondary-container: #e8def8;
+
+    --m3c-tertiary: #efb8c8;
+    --m3c-on-tertiary: #492532;
+    --m3c-tertiary-container: #633b48;
+    --m3c-on-tertiary-container: #ffd8e4;
+
+    --m3c-error: #f2b8b5;
+    --m3c-on-error: #601410;
+    --m3c-error-container: #8c1d18;
+    --m3c-on-error-container: #f9dedc;
+
+    --m3c-surface: #141218;
+    --m3c-on-surface: #e6e0e9;
+    --m3c-surface-variant: #49454f;
+    --m3c-on-surface-variant: #cac4d0;
+    --m3c-outline: #938f99;
+    --m3c-outline-variant: #444746;
+
+    --m3c-surface-container-lowest: #0f0d13;
+    --m3c-surface-container-low: #1d1b20;
+    --m3c-surface-container: #211f26;
+    --m3c-surface-container-high: #2b2930;
+    --m3c-surface-container-highest: #36343b;
+    --m3c-surface-dim: #141218;
+    --m3c-surface-bright: #3b383e;
+
+    --m3c-inverse-surface: #e6e0e9;
+    --m3c-inverse-on-surface: #313033;
+    --m3c-inverse-primary: #6750a4;
+
+    --m3c-shadow: #000000;
+    --m3c-scrim: #000000;
+  }
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--m3c-surface);
+  color: var(--m3c-on-surface);
+  font-family: var(--m3-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Material 3 utility classes for layout spacing */
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 0.75rem; }
+.gap-4 { gap: 1rem; }
+.gap-6 { gap: 1.5rem; }
+.gap-8 { gap: 2rem; }
