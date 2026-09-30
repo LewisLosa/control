@@ -9,7 +9,6 @@
   in {
     packages = forAllSystems (system: let
       pkgs = import nixpkgs {inherit system;};
-      inherit (pkgs) lib;
       node = pkgs.nodejs_22;
       pnpm = pkgs.pnpm_10;
 
@@ -35,8 +34,8 @@
         '';
       };
 
-      pythonApp = module: pkgs.writeShellApplication {
-        name = lib.last (lib.splitString "." module);
+      pythonApp = name: module: pkgs.writeShellApplication {
+        inherit name;
         runtimeInputs = [pkgs.python3];
         text = ''
           export PYTHONPATH=${backend}/lib''${PYTHONPATH:+:$PYTHONPATH}
@@ -66,15 +65,15 @@
         '';
       });
 
-      music-worker = pythonApp "backend.music.worker";
-      music-web = pythonApp "backend.music.web";
-      av1-worker = pythonApp "backend.av1.worker";
-      av1-web = pythonApp "backend.av1.web";
-      av1-enqueue = pythonApp "backend.av1.enqueue";
-      av1-encode = pythonApp "backend.av1.direct";
+      music-worker = pythonApp "music-worker" "backend.music.worker";
+      music-web = pythonApp "music-web" "backend.music.web";
+      av1-worker = pythonApp "av1-worker" "backend.av1.worker";
+      av1-web = pythonApp "av1-web" "backend.av1.web";
+      av1-enqueue = pythonApp "av1-enqueue" "backend.av1.enqueue";
+      av1-encode = pythonApp "av1-encode" "backend.av1.direct";
       av1-assets = av1-assets;
-      arr-auto-import = pythonApp "backend.arr.auto_import";
-      music-library-sanitize = pythonApp "backend.music.library_sanitize";
+      arr-auto-import = pythonApp "auto_import" "backend.arr.auto_import";
+      music-library-sanitize = pythonApp "music-library-sanitize" "backend.music.library_sanitize";
     });
   };
 }
