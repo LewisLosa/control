@@ -72,6 +72,7 @@
       av1-web = pythonApp "backend.av1.web";
       av1-enqueue = pythonApp "backend.av1.enqueue";
       av1-encode = pythonApp "backend.av1.direct";
+      av1-assets = av1-assets;
       arr-auto-import = pythonApp "backend.arr.auto_import";
       music-library-sanitize = pythonApp "backend.music.library_sanitize";
     });
