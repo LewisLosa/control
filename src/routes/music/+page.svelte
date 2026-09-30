@@ -23,7 +23,6 @@
 	import iconError from "@ktibow/iconset-material-symbols/error.js";
 	import iconClose from "@ktibow/iconset-material-symbols/close.js";
 	import iconChecklist from "@ktibow/iconset-material-symbols/checklist.js";
-	import iconTag from "@ktibow/iconset-material-symbols/tag.js";
 
 	// Organic sea-wave SVG animation for progress leading edge (inspired by M3 WavyLinearProgress)
 	const buildWaveEdgeAnim = () => {
@@ -223,7 +222,6 @@
 	let tasks = $state<any[]>(dev ? MOCK_TASKS : []);
 	let activeTab = $state("queue");
 	let multiSelectMode = $state(false);
-	let keepMetadata = $state(false);
 	let selectedProvider = $state<string>("all");
 	let displayedProvider = $state<string>("all");
 	let isFilterExiting = $state(false);
@@ -655,7 +653,6 @@
 					artist: track.artist || "",
 					album: track.album || "",
 					score: track.score || 0,
-					keep_metadata: keepMetadata,
 				}),
 			});
 
@@ -722,7 +719,7 @@
 			const res = await fetch("/api/music/auto-download", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ query: q, keep_metadata: keepMetadata }),
+				body: JSON.stringify({ query: q }),
 			});
 			const data = await res.json();
 			if (res.ok && data.success) {
@@ -801,7 +798,6 @@
 					artist: task.artist || "",
 					album: task.album || "",
 					score: task.score || 0,
-					keep_metadata: task.keep_metadata ?? keepMetadata,
 				}),
 			});
 			if (!dev) {
@@ -966,30 +962,7 @@
 
 			<div class="header-right">
 				{#if activeTab === "results"}
-					<Button
-						variant={keepMetadata ? "filled" : "tonal"}
-						size="s"
-						iconType="left"
-						class="header-btn toggle-metadata-btn {keepMetadata
-							? 'active'
-							: ''}"
-						onclick={() => {
-							keepMetadata = !keepMetadata;
-						}}
-						title={keepMetadata
-							? "Metadata Koru aktif: İndirilen parçalarda albüm, yıl ve kapak görseli korunur."
-							: "Metadata Koru kapalı: Sadece sanatçı ve şarkı adı tutulur; kapak ve detayları Navidrome eklentileri tamamlar."}
-					>
-						<Icon
-							icon={keepMetadata
-								? iconCheck
-								: iconTag}
-							size={18}
-						/>
-						<span>Metadata Koru</span>
-					</Button>
-
-					<Button
+						<Button
 						variant={multiSelectMode ? "filled" : "tonal"}
 						size="s"
 						iconType="left"
