@@ -156,6 +156,7 @@ def tag_opus_file(
         if not os.path.isfile(temp_name) or os.path.getsize(temp_name) == 0:
             raise RuntimeError("FFmpeg produced no tagged output")
         os.replace(temp_name, source)
+        os.chmod(source, 0o664)
         return True
     except (OSError, subprocess.CalledProcessError, RuntimeError) as exc:
         try:

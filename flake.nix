@@ -23,17 +23,6 @@
         '';
       };
 
-      av1-assets = pkgs.stdenvNoCC.mkDerivation {
-        pname = "control-av1-assets";
-        version = "0.1.0";
-        src = ./backend/av1/assets;
-        dontBuild = true;
-        installPhase = ''
-          mkdir -p $out
-          cp -r . $out/
-        '';
-      };
-
       pythonApp = name: module: pkgs.writeShellApplication {
         inherit name;
         runtimeInputs = [pkgs.python3];
@@ -68,10 +57,9 @@
       music-worker = pythonApp "music-worker" "backend.music.worker";
       music-web = pythonApp "music-web" "backend.music.web";
       av1-worker = pythonApp "av1-worker" "backend.av1.worker";
-      av1-web = pythonApp "av1-web" "backend.av1.web";
+      av1-api = pythonApp "av1-api" "backend.av1.api";
       av1-enqueue = pythonApp "av1-enqueue" "backend.av1.enqueue";
       av1-encode = pythonApp "av1-encode" "backend.av1.direct";
-      av1-assets = av1-assets;
       arr-auto-import = pythonApp "auto_import" "backend.arr.auto_import";
       music-library-sanitize = pythonApp "music-library-sanitize" "backend.music.library_sanitize";
     });

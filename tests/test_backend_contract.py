@@ -46,3 +46,29 @@ class BackendContractTests(unittest.TestCase):
             missing = str(Path(tmp) / "missing.opus")
             self.assertEqual(result_status("processing", missing, None), "failed")
             self.assertEqual(result_status("cancelled", missing, None), "cancelled")
+
+    def test_tagged_music_file_is_readable_by_media_group(self):
+        from backend.music.pipeline import tag_opus_file
+
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "track.opus"
+            source.write_bytes(b"source")
+
+            def fake_ffmpeg(command, check):
+                Path(command[-1]).write_bytes(b"tagged")
+
+            with patch("backend.music.pipeline.subprocess.run", side_effect=fake_ffmpeg):
+                self.assertTrue(
+                    tag_opus_file(
+                        str(source),
+                        title="Track",
+                        artist="Artist",
+                    )
+                )
+
+            self.assertEqual(source.stat().st_mode & 0o777, 0o664)
+
+    def test_av1_backend_exposes_only_control_api(self):
+        from backend.av1.api import API_PATHS
+
+        self.assertEqual(API_PATHS, {"/api/status", "/api/enqueue"})
